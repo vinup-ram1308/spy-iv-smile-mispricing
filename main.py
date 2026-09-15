@@ -6,6 +6,7 @@ data_fetch.get_spy_option_chains() for a real run (see README).
 
 import matplotlib
 
+from comparison import compare_signal_to_baseline
 from data_fetch import get_spy_option_chains
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -24,6 +25,8 @@ def main():
     with_iv = add_implied_vols(raw)
     flagged = fit_smile_and_flag(with_iv)
     trades, summary = run_backtest(flagged)
+    from comparison import compare_signal_to_baseline
+    compare_signal_to_baseline(flagged, trades)
 
     print("=== Signal summary ===")
     print(f"Contracts analyzed: {len(flagged)}")
