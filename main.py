@@ -5,6 +5,8 @@ data_fetch.get_spy_option_chains() for a real run (see README).
 """
 
 import matplotlib
+
+from data_fetch import get_spy_option_chains
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,11 +16,11 @@ from analysis import add_implied_vols, fit_smile_and_flag
 from backtest import run_backtest
 
 # swap this line for: from data_fetch import get_spy_option_chains as _get_data
-USE_REAL_DATA = False
+USE_REAL_DATA = True
 
 
 def main():
-    raw = generate_synthetic_chain() if not USE_REAL_DATA else None
+    raw = generate_synthetic_chain() if not USE_REAL_DATA else get_spy_option_chains()
     with_iv = add_implied_vols(raw)
     flagged = fit_smile_and_flag(with_iv)
     trades, summary = run_backtest(flagged)
